@@ -1,0 +1,70 @@
+# Node
+node_modules/
+dist/
+.vite/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Specific to this project - Data files
+cache_products.json
+cache_products.json.gz
+*.bak
+*.log
+debug_*.json
+pod_details.json
+purchase_orders.json
+stock_per_wh.json
+products.json
+sales_30d.json
+abc_segments.json
+inventory_logs.json
+inventory_logs_new.json
+products_with_abc.json
+*.pcap
+
+# Archivos con datos/credenciales de la empresa
+*.csv
+backend/users_data.json
+backend/last_sync_cache.json
+backend/last_sync_cache.json.gz
+
+# Archivos de debug con credenciales hardcodeadas
+backend/debug_*.py
+backend/check_*.py
+backend/trace_*.py
+backend/test_*.py
+backend/explore_*.py
+
+# Archivos temporales y de configuración local
+push_output.txt
+*.pyc
+.DS_Store

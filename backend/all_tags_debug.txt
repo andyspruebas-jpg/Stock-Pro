@@ -1,0 +1,1 @@
+[{'id': 1, 'name': 'SOBRECOBERTURA'}, {'id': 2, 'name': 'POR DESCONTINUAR'}, {'id': 3, 'name': 'POR ARCHIVAR'}, {'id': 4, 'name': 'DESCONTINUADO'}, {'id': 5, 'name': 'VIGENTE'}, {'id': 6, 'name': 'ESTACIONAL'}]
