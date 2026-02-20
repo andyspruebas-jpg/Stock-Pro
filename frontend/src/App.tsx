@@ -1041,7 +1041,7 @@ const TransferRow = React.memo(({
             })()}
           </td>
           <td className="px-3 py-1.5 text-center bg-slate-900 w-[140px] min-w-[140px] sticky left-[450px] md:left-[600px] z-10 shadow-[2px_0_5px_rgba(0,0,0,0.3)]">
-            <span className={`text-sm font-black font-mono ${sourceStock <= 0 ? "text-rose-500" : (currentView === 'ml' ? "text-indigo-400" : "text-indigo-400")}`}>
+            <span className={`text-sm font-black font-mono ${sourceStock <= 0 ? "text-rose-500" : "text-cyan-400"}`}>
               {Math.round(sourceStock)}
             </span>
           </td>
@@ -1075,10 +1075,10 @@ const TransferRow = React.memo(({
               </td>
             </>
           )}
-          {visibleWarehouses.map((wh: any) => {
+          {visibleWarehouses.map((wh: any, index: number) => {
             const targetStock = p.stock_by_wh?.[wh.id] || 0;
             return (
-              <td key={wh.id} className="px-4 py-2 text-center hover:bg-emerald-500/5 cursor-pointer transition-colors"
+              <td key={wh.id} className={`px-4 py-2 text-center hover:bg-emerald-500/5 cursor-pointer transition-colors ${index === 0 ? 'border-l-2 border-slate-700/60' : ''}`}
                 onClick={() => setTransferTargetWarehouse(wh.id)}
               >
                 <span className={`text-xs font-bold font-mono ${targetStock <= 0 ? "text-slate-700" : "text-slate-300"}`}>
@@ -4131,6 +4131,21 @@ function App() {
             <div className="h-[calc(100vh-320px)] overflow-auto custom-scrollbar relative">
               <table className="w-full text-left border-collapse min-w-[1000px]">
                 <thead className="sticky top-0 z-30 bg-slate-950 border-b border-slate-800 shadow-xl">
+                  {/* Group header row - shows "SUCURSAL ACTUAL" label in comparison mode */}
+                  {!transferTargetWarehouse && (
+                    <tr className="bg-slate-950 border-b border-slate-800/40">
+                      <th className="sticky left-0 bg-slate-950 z-40 w-[80px] min-w-[80px]"></th>
+                      <th className="sticky left-[80px] bg-slate-950 z-40 w-[300px] min-w-[300px] md:w-[450px] md:min-w-[450px]"></th>
+                      <th colSpan={2} className="sticky left-[380px] md:left-[530px] bg-slate-950 z-40 px-2 py-1 shadow-[2px_0_5px_rgba(0,0,0,0.3)]">
+                        <div className="flex items-center justify-center gap-1 bg-cyan-500/10 border border-cyan-500/20 rounded-lg px-2 py-0.5 mx-1">
+                          <span className="text-[8px] text-cyan-400 font-black uppercase tracking-widest">◆ Sucursal Actual</span>
+                        </div>
+                      </th>
+                      {visibleWarehouses.map((wh: any, i: number) => (
+                        <th key={wh.id} className={`bg-slate-950 ${i === 0 ? 'border-l-2 border-slate-700/60' : ''}`}></th>
+                      ))}
+                    </tr>
+                  )}
                   <tr className="text-slate-500 text-[10px] uppercase tracking-[0.1em] font-black">
                     <th className="px-3 py-2 w-[80px] min-w-[80px] sticky left-0 bg-slate-950 z-40 shadow-[2px_0_5px_rgba(0,0,0,0.3)]">Código</th>
                     <th className="px-3 py-2 w-[300px] min-w-[300px] md:w-[450px] md:min-w-[450px] sticky left-[80px] bg-slate-950 z-40 shadow-[2px_0_5px_rgba(0,0,0,0.3)] text-left">Producto</th>
@@ -4309,27 +4324,27 @@ function App() {
                     ) : (
                       <>
                         <th className="px-2 py-2 text-center w-[70px] min-w-[70px] sticky left-[380px] md:left-[530px] bg-slate-950 z-40 cursor-pointer hover:bg-slate-900 group shadow-[2px_0_5px_rgba(0,0,0,0.3)]" onClick={() => handleTransferSort('dest_coverage')}>
-                          <div className="flex flex-col items-center bg-indigo-500/5 py-1 rounded-lg relative">
-                            <Clock size={12} className="mb-1 text-indigo-400/70" />
-                            <span className="text-indigo-500/70">Cobert.</span>
+                          <div className="flex flex-col items-center bg-cyan-500/5 py-1 rounded-lg relative">
+                            <Clock size={12} className="mb-1 text-cyan-400/70" />
+                            <span className="text-cyan-500/70">Cobert.</span>
                             {transferSortBy === 'dest_coverage' && (
-                              <div className="absolute top-1 right-1 text-indigo-500">
+                              <div className="absolute top-1 right-1 text-cyan-500">
                                 {transferSortOrder === 'asc' ? <ArrowUp size={8} /> : <ArrowDown size={8} />}
                               </div>
                             )}
                           </div>
                         </th>
                         <th className="px-4 py-2 text-center w-[140px] min-w-[140px] sticky left-[450px] md:left-[600px] bg-slate-950 z-40 shadow-[2px_0_5px_rgba(0,0,0,0.3)]">
-                          <div className="flex flex-col items-center bg-indigo-500/10 py-1 rounded-lg">
-                            <Store size={14} className="mb-1 text-indigo-400" />
-                            <span className="text-indigo-400">
+                          <div className="flex flex-col items-center py-1">
+                            <Store size={11} className="mb-1 text-cyan-400" />
+                            <span className="text-[9px] text-cyan-300 text-center leading-tight max-w-[120px] font-bold">
                               {warehouses.find(w => w.id === selectedWarehouseId)?.name || 'Principal'}
                             </span>
-                            <span className="text-[7px] text-indigo-500/70 uppercase font-bold">Destino (Tú)</span>
+                            <span className="text-[7px] text-cyan-500/80 uppercase font-black mt-0.5 bg-cyan-500/10 border border-cyan-500/30 px-1.5 py-0.5 rounded-full">◆ Actual</span>
                           </div>
                         </th>
-                        {visibleWarehouses.map(wh => (
-                          <th key={wh.id} className="px-4 py-2 text-center min-w-[100px] cursor-pointer hover:bg-emerald-500/10 group transition-colors"
+                        {visibleWarehouses.map((wh, index) => (
+                          <th key={wh.id} className={`px-4 py-2 text-center min-w-[100px] cursor-pointer hover:bg-emerald-500/10 group transition-colors ${index === 0 ? 'border-l-2 border-slate-700/60' : ''}`}
                             onClick={() => setTransferTargetWarehouse(wh.id)}
                             title="Haz clic para solicitar traspaso desde esta sucursal"
                           >
@@ -4710,6 +4725,21 @@ function App() {
             <div className="h-[calc(100vh-320px)] overflow-auto custom-scrollbar relative">
               <table className="w-full text-left border-collapse min-w-[1000px]">
                 <thead className="sticky top-0 z-30 bg-slate-950 border-b border-slate-800 shadow-xl">
+                  {/* Group header row - shows "SUCURSAL ACTUAL" label in comparison mode */}
+                  {!transferTargetWarehouse && (
+                    <tr className="bg-slate-950 border-b border-slate-800/40">
+                      <th className="sticky left-0 bg-slate-950 z-40 w-[80px] min-w-[80px]"></th>
+                      <th className="sticky left-[80px] bg-slate-950 z-40 w-[300px] min-w-[300px] md:w-[450px] md:min-w-[450px]"></th>
+                      <th colSpan={2 + (showMLColumns ? 3 : 0)} className="sticky left-[380px] md:left-[530px] bg-slate-950 z-40 px-2 py-1 shadow-[2px_0_5px_rgba(0,0,0,0.3)]">
+                        <div className="flex items-center justify-center gap-1 bg-cyan-500/10 border border-cyan-500/20 rounded-lg px-2 py-0.5 mx-1">
+                          <span className="text-[8px] text-cyan-400 font-black uppercase tracking-widest">◆ Sucursal Actual</span>
+                        </div>
+                      </th>
+                      {visibleWarehouses.map((wh: any, i: number) => (
+                        <th key={wh.id} className={`bg-slate-950 ${i === 0 ? 'border-l-2 border-slate-700/60' : ''}`}></th>
+                      ))}
+                    </tr>
+                  )}
                   <tr className="text-slate-500 text-[10px] uppercase tracking-[0.1em] font-black">
                     <th className="px-3 py-2 w-[80px] min-w-[80px] sticky left-0 bg-slate-950 z-40 shadow-[2px_0_5px_rgba(0,0,0,0.3)]">Código</th>
                     <th className="px-3 py-2 w-[300px] min-w-[300px] md:w-[450px] md:min-w-[450px] sticky left-[80px] bg-slate-950 z-40 shadow-[2px_0_5px_rgba(0,0,0,0.3)] text-left">Producto</th>
@@ -4910,42 +4940,42 @@ function App() {
                     ) : (
                       <>
                         <th className="px-2 py-2 text-center w-[70px] min-w-[70px] sticky left-[380px] md:left-[530px] bg-slate-950 z-40 cursor-pointer hover:bg-slate-900 group shadow-[2px_0_5px_rgba(0,0,0,0.3)]" onClick={() => handleTransferSort('dest_coverage')}>
-                          <div className="flex flex-col items-center bg-purple-500/5 py-1 rounded-lg relative">
-                            <Clock size={12} className="mb-1 text-purple-400/70" />
-                            <span className="text-purple-500/70">Cobert.</span>
+                          <div className="flex flex-col items-center bg-cyan-500/5 py-1 rounded-lg relative">
+                            <Clock size={12} className="mb-1 text-cyan-400/70" />
+                            <span className="text-cyan-500/70">Cobert.</span>
                             {transferSortBy === 'dest_coverage' && (
-                              <div className="absolute top-1 right-1 text-purple-500">
+                              <div className="absolute top-1 right-1 text-cyan-500">
                                 {transferSortOrder === 'asc' ? <ArrowUp size={8} /> : <ArrowDown size={8} />}
                               </div>
                             )}
                           </div>
                         </th>
-                        <th className="px-4 py-3 text-center w-[140px] min-w-[140px] sticky left-[450px] md:left-[600px] bg-slate-900 z-40 shadow-[2px_0_5px_rgba(0,0,0,0.3)] border-b border-purple-500/20">
-                          <div className="flex flex-col items-center">
-                            <Store size={14} className="mb-1 text-purple-400" />
-                            <span className="text-purple-400 font-black uppercase text-[10px]">
+                        <th className="px-4 py-2 text-center w-[140px] min-w-[140px] sticky left-[450px] md:left-[600px] bg-slate-950 z-40 shadow-[2px_0_5px_rgba(0,0,0,0.3)]">
+                          <div className="flex flex-col items-center py-1">
+                            <Store size={11} className="mb-1 text-cyan-400" />
+                            <span className="text-[9px] text-cyan-300 text-center leading-tight max-w-[120px] font-bold">
                               {warehouses.find(w => w.id === selectedWarehouseId)?.name || 'Principal'}
                             </span>
-                            <span className="text-[7px] text-purple-500/50 uppercase font-black">Destino (Tú)</span>
+                            <span className="text-[7px] text-cyan-500/80 uppercase font-black mt-0.5 bg-cyan-500/10 border border-cyan-500/30 px-1.5 py-0.5 rounded-full">◆ Actual</span>
                           </div>
                         </th>
 
                         {/* Machine Learning Headers */}
                         {currentView === 'ml' && showMLColumns && (
                           <>
-                            <th className="px-3 py-3 text-center min-w-[100px] bg-slate-900 border-l border-indigo-500/20 border-b border-indigo-500/20">
+                            <th className="px-3 py-3 text-center min-w-[100px] bg-slate-950 border-l border-indigo-500/20">
                               <div className="flex flex-col items-center">
                                 <TrendingUp size={12} className="mb-1 text-indigo-400" />
                                 <span className="text-[9px] text-indigo-400 font-black uppercase tracking-widest">Predicción</span>
                               </div>
                             </th>
-                            <th className="px-3 py-3 text-center min-w-[80px] bg-slate-900 border-b border-purple-500/20">
+                            <th className="px-3 py-3 text-center min-w-[80px] bg-slate-950">
                               <div className="flex flex-col items-center">
                                 <Clock size={12} className="mb-1 text-purple-400" />
                                 <span className="text-[9px] text-purple-400 font-black uppercase tracking-widest">LeadTime</span>
                               </div>
                             </th>
-                            <th className="px-3 py-3 text-center min-w-[90px] bg-slate-900 border-b border-rose-500/20">
+                            <th className="px-3 py-3 text-center min-w-[90px] bg-slate-950">
                               <div className="flex flex-col items-center">
                                 <AlertTriangle size={12} className="mb-1 text-rose-400" />
                                 <span className="text-[9px] text-rose-400 font-black uppercase tracking-widest">Riesgo</span>
@@ -4953,8 +4983,8 @@ function App() {
                             </th>
                           </>
                         )}
-                        {visibleWarehouses.map(wh => (
-                          <th key={wh.id} className="px-4 py-2 text-center min-w-[100px] cursor-pointer hover:bg-indigo-500/10 group transition-colors"
+                        {visibleWarehouses.map((wh, index) => (
+                          <th key={wh.id} className={`px-4 py-2 text-center min-w-[100px] cursor-pointer hover:bg-indigo-500/10 group transition-colors ${index === 0 ? 'border-l-2 border-slate-700/60' : ''}`}
                             onClick={() => setTransferTargetWarehouse(wh.id)}
                             title="Haz clic para solicitar traspaso desde esta sucursal"
                           >
