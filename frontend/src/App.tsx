@@ -4394,6 +4394,7 @@ function App() {
         <main className="max-w-[1600px] mx-auto px-2 md:px-6 py-4 md:py-8 space-y-4 md:space-y-8">
           {/* Header Bar */}
           <section className="bg-slate-900/40 border border-slate-800 p-3 md:p-6 rounded-3xl relative z-40">
+            {/* Fila 1: Título + Botón Análisis Global IA prominente */}
             <div className="flex flex-wrap items-center justify-between gap-4">
               <div className="flex items-center gap-3 md:gap-4">
                 <button
@@ -4414,87 +4415,13 @@ function App() {
                         {transferFilteredProducts.length}
                       </span>
                     </h2>
-                    <div className="flex flex-wrap items-center gap-4 mt-2">
-                      <p className="text-xs text-slate-500 font-bold uppercase tracking-widest">{transferTargetWarehouse ? 'Análisis Predictivo' : 'Comparación de stock inteligente'}</p>
-
-                      <div className="flex flex-wrap items-center gap-4 pl-4 border-l border-slate-800">
-                        <button
-                          onClick={() => setUseML(!useML)}
-                          className={`flex items-center gap-3 px-4 py-2 rounded-2xl border transition-all duration-300 ${useML ? 'bg-indigo-500/10 border-indigo-500/50 text-indigo-400 shadow-[0_0_15px_rgba(99,102,241,0.1)]' : 'bg-slate-800/40 border-slate-700 text-slate-500 hover:border-slate-600'
-                            }`}
-                        >
-                          <Sparkles size={14} className={useML ? 'text-indigo-400 animate-pulse' : 'text-slate-500'} />
-                          <span className="text-[10px] font-black uppercase tracking-widest whitespace-nowrap">Usar ML para Demanda</span>
-                          <div className={`w-9 h-5 rounded-full relative transition-all duration-500 ${useML ? 'bg-indigo-500' : 'bg-slate-700'}`}>
-                            <div className={`absolute top-1 w-3 h-3 bg-white rounded-full transition-all duration-500 shadow-sm ${useML ? 'left-5' : 'left-1'}`} />
-                          </div>
-                        </button>
-
-                        <button
-                          onClick={() => setShowMLExplanations(!showMLExplanations)}
-                          className={`flex items-center gap-3 px-4 py-2 rounded-2xl border transition-all duration-300 ${showMLExplanations ? 'bg-purple-500/10 border-purple-500/50 text-purple-400 shadow-[0_0_15px_rgba(168,85,247,0.1)]' : 'bg-slate-800/40 border-slate-700 text-slate-500 hover:border-slate-600'
-                            }`}
-                        >
-                          <Info size={14} className={showMLExplanations ? 'text-purple-400' : 'text-slate-500'} />
-                          <span className="text-[10px] font-black uppercase tracking-widest whitespace-nowrap">Explicaciones IA</span>
-                          <div className={`w-9 h-5 rounded-full relative transition-all duration-500 ${showMLExplanations ? 'bg-purple-500' : 'bg-slate-700'}`}>
-                            <div className={`absolute top-1 w-3 h-3 bg-white rounded-full transition-all duration-500 shadow-sm ${showMLExplanations ? 'left-5' : 'left-1'}`} />
-                          </div>
-                        </button>
-
-                        <button
-                          onClick={() => setShowMLColumns(!showMLColumns)}
-                          className={`flex items-center gap-3 px-4 py-2 rounded-2xl border transition-all duration-300 ${showMLColumns ? 'bg-cyan-500/10 border-cyan-500/50 text-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.1)]' : 'bg-slate-800/40 border-slate-700 text-slate-500 hover:border-slate-600'
-                            }`}
-                        >
-                          {showMLColumns ? <Eye size={14} className="text-cyan-400" /> : <EyeOff size={14} className="text-slate-500" />}
-                          <span className="text-[10px] font-black uppercase tracking-widest whitespace-nowrap">Columnas ML</span>
-                          <div className={`w-9 h-5 rounded-full relative transition-all duration-500 ${showMLColumns ? 'bg-cyan-500' : 'bg-slate-700'}`}>
-                            <div className={`absolute top-1 w-3 h-3 bg-white rounded-full transition-all duration-500 shadow-sm ${showMLColumns ? 'left-5' : 'left-1'}`} />
-                          </div>
-                        </button>
-                      </div>
-                    </div>
+                    <p className="text-xs text-slate-500 font-bold uppercase tracking-widest mt-0.5">{transferTargetWarehouse ? 'Análisis Predictivo' : 'Comparación de stock inteligente'}</p>
                   </div>
                 </div>
               </div>
 
-              {/* Header Actions */}
-              <div className="flex flex-wrap items-center gap-2 md:gap-4">
-                {/* Warehouse Column Filter Buttons */}
-                {!transferTargetWarehouse && (
-                  <div className="flex items-center gap-2 bg-slate-800/30 px-3 py-2 rounded-2xl border border-slate-700/50">
-                    <span className="text-[9px] font-black text-slate-500 uppercase tracking-wider">Mostrar:</span>
-                    <button
-                      onClick={() => setWarehouseColumnFilter('All')}
-                      className={`px-3 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-wider transition-all ${warehouseColumnFilter === 'All'
-                        ? 'bg-indigo-500 text-white shadow-lg shadow-indigo-500/20'
-                        : 'bg-slate-800/50 text-slate-400 hover:bg-slate-700 hover:text-white'
-                        }`}
-                    >
-                      Todas
-                    </button>
-                    <button
-                      onClick={() => setWarehouseColumnFilter('NUBA')}
-                      className={`px-3 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-wider transition-all ${warehouseColumnFilter === 'NUBA'
-                        ? 'bg-indigo-500 text-white shadow-lg shadow-indigo-500/20'
-                        : 'bg-slate-800/50 text-slate-400 hover:bg-slate-700 hover:text-white'
-                        }`}
-                    >
-                      NUBA
-                    </button>
-                    <button
-                      onClick={() => setWarehouseColumnFilter('ANDYS')}
-                      className={`px-3 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-wider transition-all ${warehouseColumnFilter === 'ANDYS'
-                        ? 'bg-purple-500 text-white shadow-lg shadow-purple-500/20'
-                        : 'bg-slate-800/50 text-slate-400 hover:bg-slate-700 hover:text-white'
-                        }`}
-                    >
-                      ANDYS/YY
-                    </button>
-                  </div>
-                )}
-
+              {/* Acciones de cabecera */}
+              <div className="flex flex-wrap items-center gap-2 md:gap-3">
                 <AnimatePresence>
                   {transferTargetWarehouse && Object.values(transferQuantities).some(q => Number(q) > 0) && (
                     <motion.div
@@ -4569,21 +4496,104 @@ function App() {
                   </button>
                 )}
 
+                {/* Botón Análisis Global IA - destacado como acción principal */}
                 {warehouses.filter(w => w.id !== null).length >= 3 && !transferTargetWarehouse && (
                   <button
                     onClick={() => setShowGlobalAnalysisConfirmModal(true)}
-                    className="px-4 py-2.5 bg-indigo-600/90 hover:bg-indigo-600 border border-indigo-500/50 text-white rounded-xl transition-all flex items-center gap-2 relative group shadow-lg shadow-indigo-500/20"
+                    className="relative px-5 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white rounded-2xl flex items-center gap-3 shadow-lg shadow-indigo-500/30 ring-1 ring-white/10 transition-all duration-300 active:scale-95 group overflow-hidden"
                     title="Analizar mejores traspasos desde TODAS las sucursales"
                   >
-                    <BrainCircuit size={18} className={cn(isAnalyzingGlobalTransfers && "animate-pulse")} />
-                    <span className="text-[10px] font-black uppercase tracking-widest">Análisis Global IA</span>
+                    <div className="absolute inset-0 bg-white/0 group-hover:bg-white/5 transition-all duration-300 rounded-2xl" />
+                    <BrainCircuit size={20} className={cn("relative z-10 flex-shrink-0", isAnalyzingGlobalTransfers && "animate-pulse")} />
+                    <div className="flex flex-col items-start relative z-10">
+                      <span className="text-[11px] font-black uppercase tracking-widest leading-tight">Análisis Global IA</span>
+                      <span className="text-[8px] text-indigo-200/70 font-bold uppercase tracking-widest">Todas las sucursales</span>
+                    </div>
                   </button>
                 )}
               </div>
             </div>
 
-            {/* Filters & Search Bar */}
-            <div className="mt-4 flex flex-wrap items-center gap-3">
+            {/* Fila 2: Configuración ML + Filtro de sucursales */}
+            <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
+              {/* Switches ML en sección propia */}
+              <div className="flex flex-wrap items-center gap-2 bg-slate-800/30 rounded-2xl px-3 py-2 border border-slate-700/40">
+                <div className="flex items-center gap-1.5 pr-1">
+                  <Sparkles size={10} className="text-indigo-400/70" />
+                  <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest">Configuración ML</span>
+                </div>
+                <div className="w-px h-4 bg-slate-700/80 self-center" />
+                <button
+                  onClick={() => setUseML(!useML)}
+                  className={`flex items-center gap-2 px-3 py-1.5 rounded-xl border transition-all duration-300 ${useML ? 'bg-indigo-500/10 border-indigo-500/50 text-indigo-400 shadow-[0_0_12px_rgba(99,102,241,0.15)]' : 'bg-slate-800/40 border-slate-700 text-slate-500 hover:border-slate-600'}`}
+                >
+                  <Sparkles size={12} className={useML ? 'text-indigo-400 animate-pulse' : 'text-slate-500'} />
+                  <span className="text-[9px] font-black uppercase tracking-widest whitespace-nowrap">Usar ML</span>
+                  <div className={`w-7 h-4 rounded-full relative transition-all duration-500 flex-shrink-0 ${useML ? 'bg-indigo-500' : 'bg-slate-700'}`}>
+                    <div className={`absolute top-0.5 w-3 h-3 bg-white rounded-full transition-all duration-500 shadow-sm ${useML ? 'left-[14px]' : 'left-0.5'}`} />
+                  </div>
+                </button>
+
+                <button
+                  onClick={() => setShowMLExplanations(!showMLExplanations)}
+                  className={`flex items-center gap-2 px-3 py-1.5 rounded-xl border transition-all duration-300 ${showMLExplanations ? 'bg-purple-500/10 border-purple-500/50 text-purple-400 shadow-[0_0_12px_rgba(168,85,247,0.15)]' : 'bg-slate-800/40 border-slate-700 text-slate-500 hover:border-slate-600'}`}
+                >
+                  <Info size={12} className={showMLExplanations ? 'text-purple-400' : 'text-slate-500'} />
+                  <span className="text-[9px] font-black uppercase tracking-widest whitespace-nowrap">Explicaciones</span>
+                  <div className={`w-7 h-4 rounded-full relative transition-all duration-500 flex-shrink-0 ${showMLExplanations ? 'bg-purple-500' : 'bg-slate-700'}`}>
+                    <div className={`absolute top-0.5 w-3 h-3 bg-white rounded-full transition-all duration-500 shadow-sm ${showMLExplanations ? 'left-[14px]' : 'left-0.5'}`} />
+                  </div>
+                </button>
+
+                <button
+                  onClick={() => setShowMLColumns(!showMLColumns)}
+                  className={`flex items-center gap-2 px-3 py-1.5 rounded-xl border transition-all duration-300 ${showMLColumns ? 'bg-cyan-500/10 border-cyan-500/50 text-cyan-400 shadow-[0_0_12px_rgba(6,182,212,0.15)]' : 'bg-slate-800/40 border-slate-700 text-slate-500 hover:border-slate-600'}`}
+                >
+                  {showMLColumns ? <Eye size={12} className="text-cyan-400" /> : <EyeOff size={12} className="text-slate-500" />}
+                  <span className="text-[9px] font-black uppercase tracking-widest whitespace-nowrap">Columnas ML</span>
+                  <div className={`w-7 h-4 rounded-full relative transition-all duration-500 flex-shrink-0 ${showMLColumns ? 'bg-cyan-500' : 'bg-slate-700'}`}>
+                    <div className={`absolute top-0.5 w-3 h-3 bg-white rounded-full transition-all duration-500 shadow-sm ${showMLColumns ? 'left-[14px]' : 'left-0.5'}`} />
+                  </div>
+                </button>
+              </div>
+
+              {/* Filtro de columnas por sucursal */}
+              {!transferTargetWarehouse && (
+                <div className="flex items-center gap-2 bg-slate-800/30 px-3 py-2 rounded-2xl border border-slate-700/50">
+                  <span className="text-[9px] font-black text-slate-500 uppercase tracking-wider">Mostrar:</span>
+                  <button
+                    onClick={() => setWarehouseColumnFilter('All')}
+                    className={`px-3 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-wider transition-all ${warehouseColumnFilter === 'All'
+                      ? 'bg-indigo-500 text-white shadow-lg shadow-indigo-500/20'
+                      : 'bg-slate-800/50 text-slate-400 hover:bg-slate-700 hover:text-white'
+                      }`}
+                  >
+                    Todas
+                  </button>
+                  <button
+                    onClick={() => setWarehouseColumnFilter('NUBA')}
+                    className={`px-3 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-wider transition-all ${warehouseColumnFilter === 'NUBA'
+                      ? 'bg-indigo-500 text-white shadow-lg shadow-indigo-500/20'
+                      : 'bg-slate-800/50 text-slate-400 hover:bg-slate-700 hover:text-white'
+                      }`}
+                  >
+                    NUBA
+                  </button>
+                  <button
+                    onClick={() => setWarehouseColumnFilter('ANDYS')}
+                    className={`px-3 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-wider transition-all ${warehouseColumnFilter === 'ANDYS'
+                      ? 'bg-purple-500 text-white shadow-lg shadow-purple-500/20'
+                      : 'bg-slate-800/50 text-slate-400 hover:bg-slate-700 hover:text-white'
+                      }`}
+                  >
+                    ANDYS/YY
+                  </button>
+                </div>
+              )}
+            </div>
+
+            {/* Fila 3: Filtros y búsqueda */}
+            <div className="mt-3 flex flex-wrap items-center gap-3">
               <FilterDropdown
                 label="Categoría"
                 icon={ListFilter}
